@@ -13,6 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/{var1?}/{var2?}', function () {
+Route::get('/', function () {
     return view('app');
 });

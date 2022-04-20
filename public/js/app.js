@@ -19641,6 +19641,14 @@ __webpack_require__.r(__webpack_exports__);
     HeaderComponent: _layouts_HeaderComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     MainComponent: _layouts_MainComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     FooterComponent: _layouts_FooterComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  beforeCreate: function beforeCreate() {
+    store.dispatch('setAuthUser');
+  },
+  computed: {
+    isAuth: function isAuth() {
+      return state.authUser ? true : false;
+    }
   }
 });
 
@@ -19920,6 +19928,12 @@ __webpack_require__.r(__webpack_exports__);
     ALink: _components_DropdownLink_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     ButtonComponent: _components_Button_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
+  props: {
+    is_auth: {
+      type: Boolean,
+      required: true
+    }
+  },
   data: function data() {
     return {
       loginAuth: false,
@@ -20051,7 +20065,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_footer_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("footer-component");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_header_component), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_main_component), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_footer_component)]);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_header_component, {
+    is_auth: $options.isAuth
+  }, null, 8
+  /* PROPS */
+  , ["is_auth"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_main_component), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_footer_component)]);
 }
 
 /***/ }),
@@ -20326,7 +20344,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_form_register = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("form-register");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("nav", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_a_link, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("nav", _hoisted_2, [_hoisted_3, !$props.is_auth ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_a_link, {
+    key: 0,
     as: 'a',
     onClick: _cache[0] || (_cache[0] = function ($event) {
       return $options.loginModal();
@@ -20338,7 +20357,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_a_link, {
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !$props.is_auth ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_a_link, {
+    key: 1,
     as: 'a',
     onClick: _cache[1] || (_cache[1] = function ($event) {
       return $options.registerModal();
@@ -20350,7 +20370,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_a_link, {
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_a_link, {
     as: 'a'
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -20627,6 +20647,7 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.withCredentials = true;
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -20726,6 +20747,34 @@ var store = (0,vuex__WEBPACK_IMPORTED_MODULE_0__.createStore)({
     return {
       authUser: null
     };
+  },
+  mutations: {
+    auth: function auth(state, user) {
+      state.authUser = user;
+    }
+  },
+  actions: {
+    setAuthUser: function setAuthUser() {
+      var _this = this;
+
+      axios.get('/sanctum/csrf-cookie').then(function (res) {
+        axios.get('/api/get_auth_user').then(function (res) {
+          if (res.data.validation) {
+            _this.commit('auth', res.data.user);
+          } else {
+            _this.commit('auth', null);
+          }
+
+          console.log(res.data);
+        })["catch"](function (err) {
+          _this.commit('auth', null);
+
+          console.log(err);
+        });
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    }
   }
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);

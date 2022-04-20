@@ -5,8 +5,8 @@
                 <li>home</li>
                 <li>nosotros</li>
             </ul>
-            <a-link :as="'a'" @click="loginModal()">login</a-link>
-            <a-link :as="'a'" @click="registerModal()">registrar</a-link>
+            <a-link :as="'a'" @click="loginModal()" v-if="!is_auth">login</a-link>
+            <a-link :as="'a'" @click="registerModal()" v-if="!is_auth">registrar</a-link>
             <a-link :as="'a'">
                 <router-link to="/reset-password/hih">Go to About</router-link>
             </a-link>
@@ -51,6 +51,12 @@ export default {
         FormRegister,
         ALink,
         ButtonComponent
+    },
+    props:{
+        is_auth: {
+            type: Boolean,
+            required: true
+        }
     },
     data(){
         return {

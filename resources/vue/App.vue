@@ -1,6 +1,8 @@
 <template>
     <div id="app_wrapper">
-        <header-component></header-component>
+        <header-component
+        :is_auth="isAuth"
+        ></header-component>
         <main-component></main-component>
         <footer-component></footer-component>
     </div>
@@ -15,6 +17,14 @@ export default {
         HeaderComponent,
         MainComponent,
         FooterComponent
+    },
+    beforeCreate: function(){
+        store.dispatch('setAuthUser');
+    },
+    computed:{
+        isAuth: function(){
+            return (state.authUser) ? true : false;
+        }
     }
 }
 </script>
