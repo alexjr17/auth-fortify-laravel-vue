@@ -60,7 +60,7 @@ export default {
     },
     data(){
         return {
-            loginAuth: false,
+            loginAuth: true,
             registerAuth: false,
         }
     },

@@ -1,11 +1,12 @@
 <template>
     <div>
-        <div>
-            <h1>Registro</h1>
+        <div class="mx-4 my-2">
+            <h1 class="text-lg text-center">Registro</h1>
+            {{nombre}}
             <form @submit.prevent="logUp()">
                 <div>
                     <label-component>Nombre</label-component>
-                    <input-component></input-component>
+                    <input-component v-model="nombre"></input-component>
                 </div>
                 <div>
                     <label-component>Correo</label-component>
@@ -37,6 +38,11 @@ export default {
         InputComponent,
         LabelComponent,
         ButtonComponent       
+    },
+    data(){
+        return {
+            nombre: ''
+        }
     },
     methods:{
         logUp(){

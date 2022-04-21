@@ -16,3 +16,5 @@ mix.js('resources/js/app.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         require("tailwindcss"),
     ]);
+
+mix.combine(['resources/assets/js/jsvalidator.js'], 'public/js/custom.js');
