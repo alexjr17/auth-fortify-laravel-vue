@@ -27,7 +27,8 @@
         <modal :show="showRegister" :maxWidth="'md'">
             <div class="static">
                 <div>
-                    <form-register></form-register>
+                    <form-register
+                    @sucesseSutmit="resSubmit"></form-register>
                 </div>
                 <div class="absolute top-0 right-2">
                     <a class="text-lg text-red-600" @click="registerModal()">X</a>
@@ -60,13 +61,14 @@ export default {
     },
     data(){
         return {
-            loginAuth: true,
+            loginAuth: false,
             registerAuth: false,
         }
     },
     methods:{
-        loguear(){
-            console.log('boton enviar formulario');
+        resSubmit(payload){
+            store.dispatch('setAuthUser', payload);
+            this.registerModal();
         },
         loginModal(){
             this.loginAuth = !this.loginAuth;

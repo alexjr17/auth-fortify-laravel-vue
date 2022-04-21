@@ -24,7 +24,7 @@
                     v-model="password" />    
                 </div>
                 <div>
-                    <button-component type="submit">Entrar</button-component>
+                    <button-component type="submit" class="mt-2">Entrar</button-component>
                 </div>
             </form>
         </div>
@@ -34,8 +34,8 @@
 <script>
 
 import InputComponent from '../../components/forms/ImputComponent.vue'
-import LabelComponent from '../../components/Label.vue'
-import ButtonComponent from '../../components/Button.vue'
+import LabelComponent from '../../components/forms/LabelComponent.vue'
+import ButtonComponent from '../../components/ButtonComponent.vue'
 export default {
     components:{        
         InputComponent,

@@ -1,23 +1,19 @@
 <template>
-    <div>
-        <div class="mt-1 flex rounded-md shadow-sm">
-            <span v-if="hasIcon" class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-                <i :class="iconAttr"></i>
-            </span>
-            <input 
-            class="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
-            :class="customClass"
-            :type="type"
-            :name="name" 
-            :id="id"
-            :placeholder="placeholder"
-            :data-validators="validators"
-            :data-min_length="min_length"
-            :data-max_length="max_length"
-            v-model="value">
-                       
-            
-        </div>
+    <div class="flex rounded-md border border-1 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+        <span v-if="hasIcon" class="inline-flex items-center px-3 ">
+            <i :class="iconAttr"></i>
+        </span>
+        <input 
+        class="py-2 px-2 w-full focus:outline-blue-500"
+        :class="customClass"
+        :type="type"
+        :name="name" 
+        :id="id"
+        :placeholder="placeholder"
+        :data-validators="validators"
+        :data-min_length="min_length"
+        :data-max_length="max_length"
+        v-model="value">
     </div>    
 </template>
 
