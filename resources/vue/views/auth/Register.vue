@@ -33,7 +33,9 @@
                         type="password"
                         name='password'
                         placeholder="escribe tu nombre"
-                        validators="required"
+                        validators="required length"
+                        min_length="8"
+                        max_length="20"
                         v-model="password"
                     ></input-component>   
                 </div>
@@ -79,7 +81,7 @@ export default {
         }
     },
     emits:{
-        sucesseSutmit(payload){
+        sucesseSubmit(payload){
             return payload;
         }
     },
@@ -94,16 +96,16 @@ export default {
             formData.append('email', this.email);
             formData.append('password', this.password);
             formData.append('password_confirmation', this.password_fonfimation);
-            console.log(formData.get('name'));
-            console.log(formData.get('email'));
-            console.log(formData.get('password'));
-            console.log(formData.get('password_fonfimation'));
-            console.log(formData);
+            // console.log(formData.get('name'));
+            // console.log(formData.get('email'));
+            // console.log(formData.get('password'));
+            // console.log(formData.get('password_fonfimation'));
+            // console.log(formData);
             if (this.registerFormValidator.status) {
                 
                 axios.post('/register',formData)
                 .then(res => {
-                    this.$emit('sucesseSutmit', {
+                    this.$emit('sucesseSubmit', {
                         msg: 'Cuentra creada',
                         res: res
                     });

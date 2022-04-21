@@ -16,7 +16,8 @@
         <modal :show="showLogin" :maxWidth="'md'">
             <div class="static">
                 <div>
-                    <form-login></form-login>
+                    <form-login
+                    @sucesseSubmit="resSubmit"></form-login>
                 </div>
                 <div class="absolute top-0 right-2">
                     <a class="text-lg text-red-600" @click="loginModal()">X</a>
@@ -28,7 +29,7 @@
             <div class="static">
                 <div>
                     <form-register
-                    @sucesseSutmit="resSubmit"></form-register>
+                    @sucesseSubmit="resSubmit"></form-register>
                 </div>
                 <div class="absolute top-0 right-2">
                     <a class="text-lg text-red-600" @click="registerModal()">X</a>
@@ -67,8 +68,13 @@ export default {
     },
     methods:{
         resSubmit(payload){
-            store.dispatch('setAuthUser', payload);
-            this.registerModal();
+            store.dispatch('setAuthUser');
+            if (this.showLogin) {
+                this.loginModal();
+            }
+            if (this.showRegister) {
+                this.loginModal();
+            }
         },
         loginModal(){
             this.loginAuth = !this.loginAuth;
