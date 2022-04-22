@@ -81,7 +81,7 @@ export default {
         }
     },
     emits:{
-        sucesseSubmit(payload){
+        submit(payload){
             return payload;
         }
     },
@@ -105,7 +105,7 @@ export default {
                 
                 axios.post('/register',formData)
                 .then(res => {
-                    this.$emit('sucesseSubmit', {
+                    this.$emit('submit', {
                         msg: 'Cuentra creada',
                         res: res
                     });

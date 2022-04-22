@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div class="mx-4 my-2">
+        <div class="mx-4 my-2" v-show="showLogin">
             <h1 class="text-lg text-center">login</h1>
             
-            <form id="form_login" @submit.prevent="onSubmit()" >
+            <form id="form_login" @submit.prevent="onSubmit()">
                 {{email}}
                 {{password}}
                 <div>
@@ -29,10 +29,19 @@
                     max_length="20"
                     v-model="password" />    
                 </div>
-                <div>
+                <div class="flex justify-between">
                     <button-component type="submit" class="mt-2">Entrar</button-component>
+                    <link-a-component class="text-sm" @click="showforgetPassword">
+                        ¿Olvido su contraseña?
+                    </link-a-component>
                 </div>
             </form>
+        </div>
+        <div class="mx-4 my-2">
+            <forgot-password
+            v-show="!showLogin"
+            @submit="formSubmit"
+            ></forgot-password>
         </div>
     </div>    
 </template>
@@ -42,14 +51,18 @@
 import InputComponent from '../../components/forms/ImputComponent.vue'
 import LabelComponent from '../../components/forms/LabelComponent.vue'
 import ButtonComponent from '../../components/ButtonComponent.vue'
+import LinkAComponent from '../../components/LinkAComponent.vue'
+import ForgotPassword from '../auth/ForgotPassword.vue'
 export default {
     components:{        
         InputComponent,
         LabelComponent,
-        ButtonComponent       
+        ButtonComponent,
+        LinkAComponent,
+        ForgotPassword   
     },
     emits:{
-        sucesseSubmit(payload){
+        submit(payload){
             return payload;
         }
     },
@@ -57,13 +70,18 @@ export default {
         return {
             email: "",
             password:'',
-            jsValidator: undefined
+            jsValidator: undefined,
+            show: true
         }
     },
     mounted () {
         this.jsValidator = new JSValidator('form_login').init();
     },
     methods:{
+        formSubmit(payload){
+            store.dispatch('setAuthUser');
+            console.log(payload.msg);
+        },
         onSubmit(){
             let formData = new FormData();
             formData.append('email', this.email);
@@ -71,7 +89,7 @@ export default {
             if (this.jsValidator.status) {
                 axios.post('/login',formData)
                 .then(res => {
-                    this.$emit('sucesseSubmit', {
+                    this.$emit('submit', {
                         msg: 'onsession',
                         res: res
                     });
@@ -83,6 +101,14 @@ export default {
             } else {
                 
             }
+        },
+        showforgetPassword(){
+            this.show = !this.show;
+        }
+    },
+    computed: {
+        showLogin() {
+            return this.show ? true : false;
         }
     }
 }

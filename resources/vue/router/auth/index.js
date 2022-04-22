@@ -2,7 +2,7 @@ export default [
     {
         path: '/reset-password/:token',
         name: 'ResetPassword',
-        component: () => import(/* webpackChuckName: "ResetPassword"*/'../../views/auth/ResetPassword.vue'),
+        component: () => import(/* webpackChuckName: "ResetPassword"*/'../../views/auth/ResetPasswordView.vue'),
         meta:{
             title: 'restablecer contraseña'
         }

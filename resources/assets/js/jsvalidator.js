@@ -83,7 +83,7 @@ class JSValidator {
         } else {
           // Solo para fines demostrativos
           e.preventDefault();
-          console.log('Se ha enviado con el navegador');
+          console.log('Paso validacion de campos');
         }
       }
     });
