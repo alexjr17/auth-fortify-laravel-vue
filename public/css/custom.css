@@ -1,0 +1,10 @@
+.error-msg{
+    @apply max-w-7xl mx-auto px-2 text-sm text-red-500 w-full;
+    font-size: 0.875rem/* 14px */;
+    line-height: 1.25rem/* 20px */;
+    --tw-text-opacity: 1;
+    color: rgb(239 68 68 / var(--tw-text-opacity));
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
